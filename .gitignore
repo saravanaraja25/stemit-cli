@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# stemit runtime output
+stemit-output/
+tmp/
+
+# npm pack artifact
+*.tgz
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.env
+.env.local
+
+# Claude Code
+.claude

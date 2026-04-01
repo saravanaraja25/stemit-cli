@@ -1,0 +1,5 @@
+stemit-output/
+tmp/
+.stemit/
+node_modules/
+*.log

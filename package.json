@@ -30,11 +30,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/saravanaraja25/stemit.git"
+    "url": "https://github.com/saravanaraja25/stemit-cli.git"
   },
-  "homepage": "https://github.com/saravanaraja25/stemit#readme",
+  "homepage": "https://github.com/saravanaraja25/stemit-cli#readme",
   "bugs": {
-    "url": "https://github.com/saravanaraja25/stemit/issues"
+    "url": "https://github.com/saravanaraja25/stemit-cli/issues"
   },
   "scripts": {
     "start": "node bin/stemit.js"

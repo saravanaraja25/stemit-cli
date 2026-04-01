@@ -114,20 +114,11 @@ async function ensureDemucsVenv(systemPython) {
       process.exit(1)
     }
     console.log(chalk.green('  ✔ demucs installed'))
-
-    // macOS: fix SSL certificate verification (common issue with python.org installer)
-    if (process.platform === 'darwin') {
-      const certScript = spawnSync(
-        VENV_PYTHON,
-        ['-c', 'import certifi, ssl, urllib.request; urllib.request.install_opener(urllib.request.build_opener(urllib.request.HTTPSHandler(context=ssl.create_default_context(cafile=certifi.where()))))'],
-        { encoding: 'utf8', stdio: 'pipe' }
-      )
-      if (certScript.status !== 0) {
-        console.log(chalk.yellow(
-          '  ⚠ SSL cert fix skipped. If you see SSL errors, run:\n' +
-          '    /Applications/Python\\ 3.x/Install\\ Certificates.command'
-        ))
-      }
+  } else {
+    // Ensure certifi is present even if venv was created without it
+    const certifiCheck = spawnSync(VENV_PYTHON, ['-c', 'import certifi'], { encoding: 'utf8', stdio: 'pipe' })
+    if (certifiCheck.status !== 0) {
+      spawnSync(VENV_PIP, ['install', '--quiet', 'certifi'], { encoding: 'utf8', stdio: 'inherit' })
     }
   }
 

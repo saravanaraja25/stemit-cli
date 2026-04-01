@@ -76,6 +76,10 @@ stemit requires two system-level dependencies. Everything else (including Demucs
 
 > **Note:** Demucs (the AI model) and all Python dependencies are installed automatically into a private virtualenv at `~/.stemit/venv` the first time you run any `stemit` command. You do not need to `pip install` anything yourself.
 
+> **System requirements disclaimer:** stemit depends on local CPU performance, OS audio tooling, network reliability (for URL downloads), and third-party binaries (`ffmpeg`, Python packages, model downloads). Performance and output quality can vary across machines and environments.
+>
+> If you run into setup issues, command failures, or unexpected output, please open an issue with your OS, Node/Python versions, command used, and error logs so i can help quickly.
+
 ---
 
 ## Installation

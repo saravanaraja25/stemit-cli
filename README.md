@@ -66,7 +66,7 @@ You get back clean, studio-quality isolated tracks you can drop straight into yo
 
 ## Prerequisites
 
-stemit requires two system-level dependencies. Everything else (including Demucs itself) is installed automatically on first run.
+stemit requires three system-level dependencies. Everything else (including Demucs itself) is installed automatically on first run.
 
 | Dependency | Minimum Version | Install |
 |---|---|---|
@@ -78,7 +78,7 @@ stemit requires two system-level dependencies. Everything else (including Demucs
 
 > **System requirements disclaimer:** stemit depends on local CPU performance, OS audio tooling, network reliability (for URL downloads), and third-party binaries (`ffmpeg`, Python packages, model downloads). Performance and output quality can vary across machines and environments.
 >
-> If you run into setup issues, command failures, or unexpected output, please open an issue with your OS, Node/Python versions, command used, and error logs so i can help quickly.
+> If you run into setup issues, command failures, or unexpected output, please open an issue with your OS, Node/Python versions, command used, and error logs so I can help quickly.
 
 ---
 

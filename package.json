@@ -1,6 +1,6 @@
 {
   "name": "stemit-cli",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "CLI tool to split audio into stems (vocals/drums/bass/other), analyze BPM & key, and mute/solo tracks",
   "type": "module",
   "bin": {

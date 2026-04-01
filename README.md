@@ -82,20 +82,20 @@ stemit requires two system-level dependencies. Everything else (including Demucs
 ### Using npx (no install required)
 
 ```bash
-npx stemit split "https://www.youtube.com/watch?v=..."
+npx stemit-cli split "https://www.youtube.com/watch?v=..."
 ```
 
 ### Global install
 
 ```bash
-npm install -g stemit
+npm install -g stemit-cli
 stemit split "https://www.youtube.com/watch?v=..."
 ```
 
 ### Local install (in a project)
 
 ```bash
-npm install stemit
+npm install stemit-cli
 npx stemit split ./my-song.wav
 ```
 

@@ -1,4 +1,4 @@
-import { spawn } from 'child_process'
+import { spawn, execFileSync } from 'child_process'
 import path from 'path'
 import fs from 'fs'
 
@@ -35,8 +35,24 @@ export function splitStems(
 ) {
   return new Promise((resolve, reject) => {
     const args = ['-m', 'demucs', '-n', model, '--out', outputDir, inputFile]
+
+    // Resolve certifi's CA bundle path from within the venv (fixes macOS SSL issues)
+    let sslCertFile = process.env.SSL_CERT_FILE
+    try {
+      const certPath = execFileSync(pythonPath, ['-c', 'import certifi; print(certifi.where())'], {
+        encoding: 'utf8',
+      }).trim()
+      if (certPath) sslCertFile = certPath
+    } catch {
+      // certifi not available — fall back to system SSL
+    }
+
     const proc = spawn(pythonPath, args, {
-      env: { ...process.env, TORCHAUDIO_BACKEND: 'soundfile' },
+      env: {
+        ...process.env,
+        TORCHAUDIO_BACKEND: 'soundfile',
+        ...(sslCertFile ? { SSL_CERT_FILE: sslCertFile, REQUESTS_CA_BUNDLE: sslCertFile } : {}),
+      },
     })
 
     const stderrLines = []

@@ -102,18 +102,33 @@ async function ensureDemucsVenv(systemPython) {
 
   if (demucsCheck.status !== 0) {
     console.log(chalk.cyan('  Installing demucs (one-time setup, may take a minute) …'))
-    const install = spawnSync(VENV_PIP, ['install', 'demucs', 'soundfile', 'torchcodec'], {
+    const install = spawnSync(VENV_PIP, ['install', 'demucs', 'soundfile', 'torchcodec', 'certifi'], {
       encoding: 'utf8',
       stdio: 'inherit',
     })
     if (install.status !== 0) {
       console.error(chalk.red(
         '\n  Failed to install demucs. Try manually:\n' +
-        '    pip install demucs soundfile torchcodec'
+        '    pip install demucs soundfile torchcodec certifi'
       ))
       process.exit(1)
     }
     console.log(chalk.green('  ✔ demucs installed'))
+
+    // macOS: fix SSL certificate verification (common issue with python.org installer)
+    if (process.platform === 'darwin') {
+      const certScript = spawnSync(
+        VENV_PYTHON,
+        ['-c', 'import certifi, ssl, urllib.request; urllib.request.install_opener(urllib.request.build_opener(urllib.request.HTTPSHandler(context=ssl.create_default_context(cafile=certifi.where()))))'],
+        { encoding: 'utf8', stdio: 'pipe' }
+      )
+      if (certScript.status !== 0) {
+        console.log(chalk.yellow(
+          '  ⚠ SSL cert fix skipped. If you see SSL errors, run:\n' +
+          '    /Applications/Python\\ 3.x/Install\\ Certificates.command'
+        ))
+      }
+    }
   }
 
   return VENV_PYTHON

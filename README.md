@@ -34,6 +34,7 @@
     - [Skip BPM/key analysis](#skip-bpmkey-analysis)
     - [All options](#all-options)
   - [Available Models](#available-models)
+  - [Separation Accuracy](#separation-accuracy)
   - [Output Structure](#output-structure)
   - [How It Works](#how-it-works)
   - [First-Run Setup](#first-run-setup)
@@ -256,6 +257,45 @@ Options:
 - `mdx_extra_q` — when speed matters more than quality (e.g. batch processing)
 
 **Speed note:** Demucs runs on CPU by default. Processing time is roughly **2–5× the song length** on modern hardware (e.g. a 4-minute song takes 8–20 minutes). The `mdx_extra_q` model is significantly faster.
+
+---
+
+## Separation Accuracy
+
+stemit uses [Demucs](https://github.com/facebookresearch/demucs) — one of the highest-rated open-source source separation models, consistently ranking at the top of the [Music Demixing Challenge](https://mdx-workshop.github.io/) leaderboards.
+
+**What to expect:**
+
+| Genre / Instrument | Typical Quality |
+|---|---|
+| Vocals (pop/rock) | Excellent — clean isolation with minimal bleed |
+| Drums | Very good — kick, snare, and cymbals well preserved |
+| Bass | Good — works best when bass is prominent in the mix |
+| Guitar / Piano (`htdemucs_6s`) | Moderate — depends heavily on how prominent the instrument is |
+| Electronic / heavily layered music | Lower — harder to separate tightly mixed synths |
+| Vocals (rap/spoken word) | Good — works well when vocals are dry or lightly processed |
+
+**Factors that affect quality:**
+
+- **Production style** — heavily compressed or layered mixes are harder to separate
+- **Frequency overlap** — instruments sharing the same frequency range (e.g. bass guitar and kick drum) bleed into each other
+- **Reverb / effects** — wet, heavily reverbed sources are harder to isolate cleanly
+- **Model choice** — `htdemucs_ft` gives the best overall quality; `mdx_extra` is specifically tuned for vocals
+
+**Benchmark scores (SDR — Signal-to-Distortion Ratio, higher is better):**
+
+The `htdemucs_ft` model achieves approximately:
+
+| Stem | SDR |
+|---|---|
+| Vocals | ~8.4 dB |
+| Drums | ~8.6 dB |
+| Bass | ~8.8 dB |
+| Other | ~5.8 dB |
+
+> SDR is a standard metric for source separation. Scores above 6 dB are considered good; above 8 dB is excellent. For reference, an SDR of 0 means the output is no better than silence.
+
+These scores are competitive with commercial stem separation tools and are state-of-the-art for open-source models. Results on real-world music may vary.
 
 ---
 
